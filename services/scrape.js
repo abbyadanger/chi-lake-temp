@@ -5,18 +5,18 @@ export async function scrapeData(url = 'https://forecast.weather.gov/product.php
     console.log(`Scraping: ${url}`);
     
     // Use CORS proxy to bypass CORS restrictions
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
     const response = await fetch(proxyUrl);
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    const data = await response.json();
+    const data = await response.text(); // corsproxy.io returns HTML directly
     
     // Parse HTML using DOMParser (browser API)
     const parser = new DOMParser();
-    const doc = parser.parseFromString(data.contents, 'text/html');
+    const doc = parser.parseFromString(data, 'text/html');
     
     // Extract .glossaryProduct elements
     const elements = doc.querySelectorAll('.glossaryProduct');

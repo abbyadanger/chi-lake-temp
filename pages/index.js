@@ -1,5 +1,5 @@
 import DatabaseService from '../services/databaseService'
-import { scrapeData } from '../scrape'
+import { scrapeData } from '../services/scrape'
 import { useState } from 'react'
 
 export default function Home() {
